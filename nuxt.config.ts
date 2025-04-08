@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { fileURLToPath } from "node:url";
+
 export default defineNuxtConfig({
   compatibilityDate: "2025-04-07",
   devtools: { enabled: true },
@@ -8,8 +10,11 @@ export default defineNuxtConfig({
   experimental: {
     scanPageMeta: true,
   },
+  alias: {
+    "@": fileURLToPath(new URL("./", import.meta.url)),
+  },
   modules: [
-    "@nuxtjs/tailwindcss",
+    // "@nuxtjs/tailwindcss",
     "@pinia/nuxt",
     [
       "@nuxt/ui",
@@ -32,6 +37,14 @@ export default defineNuxtConfig({
       },
     ],
   ],
+  css: ["@/assets/css/main.css"],
+
+  postcss: {
+    plugins: {
+      "@tailwindcss/postcss": {},
+      autoprefixer: {},
+    },
+  },
   typescript: {
     strict: true,
   },
