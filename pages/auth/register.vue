@@ -10,18 +10,29 @@
     >
       <div class="space-y-4 flex flex-col">
         <!-- Profile Picture Upload -->
-        <label for="name" class="block mb-1 text-sm text-gray-700 font-medium">
+        <label
+          for="profile_picture"
+          class="block mb-1 text-sm text-gray-700 font-medium"
+        >
           الصورة الشخصية
         </label>
         <div
-          class="border-dashed border-2 border-gray-300 rounded-lg p-4 text-center"
+          class="border-dashed border-2 border-gray-300 rounded-lg p-4 text-center cursor-pointer"
+          @click="triggerFileInput"
         >
-          <div class="text-gray-500 text-sm">
-            <i class="i-lucide-camera text-2xl mb-2"></i>
+          <div class="text-gray-500 text-sm flex flex-col items-center">
+            <img src="/images/camera.svg" alt="camera" class="mb-1" />
             <p>JPEG , PNG : الملفات المسموح بها</p>
             <p>5MB الحد الأقصى</p>
           </div>
         </div>
+        <input
+          id="profile_picture"
+          type="file"
+          accept="image/jpeg, image/png"
+          class="hidden"
+          @change="handleFileUpload"
+        />
 
         <!-- Full Name Field -->
         <UFormGroup
@@ -166,6 +177,21 @@ const handleRegister = async (values: any) => {
     navigateTo("/auth/verify-otp");
   } catch (error) {
     console.error("Registration failed:", error);
+  }
+};
+
+const triggerFileInput = () => {
+  const fileInput = document.getElementById("profile_picture");
+  if (fileInput) {
+    fileInput.click();
+  }
+};
+
+const handleFileUpload = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  const file = target.files ? target.files[0] : null;
+  if (file) {
+    console.log("File selected:", file);
   }
 };
 
