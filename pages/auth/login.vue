@@ -1,8 +1,8 @@
 <template>
   <NuxtLayout name="auth">
-    <template #title>Welcome back</template>
+    <template #title>تسجيل الدخول</template>
     <template #subtitle>
-      Don't have an account?
+      قم بإدخال بياناتك حتى تستطيع تسجيل الدخول
       <NuxtLink
         to="/auth/register"
         class="font-medium text-primary-600 hover:text-primary-500"
