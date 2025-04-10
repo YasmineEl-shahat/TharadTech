@@ -9,14 +9,14 @@
       style="background-image: url('/images/authbg.jpeg')"
     ></div>
 
-    <!-- Background Filter -->
+    <!-- Backdrop Filter -->
     <div class="absolute inset-0 bg-[#42867BB2]"></div>
 
     <!-- Card Content -->
     <div
-      class="relative w-full max-w-xl bg-white rounded-lg shadow-lg overflow-hidden"
+      class="relative w-full max-w-xl bg-white rounded-3xl shadow-lg overflow-hidden"
     >
-      <div class="p-6 sm:p-10">
+      <div class="p-6 sm:p-10 md:p-20">
         <div class="text-center">
           <img
             class="mx-auto h-16 w-auto"
@@ -39,22 +39,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-// Auth layout for login, register, and OTP verification pages
-</script>
-
-<style scoped>
-/* Ensure the background image covers the entire screen */
-.bg-cover {
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-/* Card shadow and rounded corners */
-.shadow-lg {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-</style>

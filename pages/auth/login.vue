@@ -1,15 +1,7 @@
 <template>
   <NuxtLayout name="auth">
     <template #title>تسجيل الدخول</template>
-    <template #subtitle>
-      قم بإدخال بياناتك حتى تستطيع تسجيل الدخول
-      <NuxtLink
-        to="/auth/register"
-        class="font-medium text-primary-600 hover:text-primary-500"
-      >
-        Sign up
-      </NuxtLink>
-    </template>
+    <template #subtitle>قم بإدخال بياناتك حتى تستطيع تسجيل الدخول</template>
 
     <VeeForm
       :validation-schema="loginSchema"
@@ -17,7 +9,13 @@
       @submit="handleLogin"
     >
       <div class="space-y-6">
-        <UFormGroup label="Email address" name="email" :error="errors.email">
+        <!-- Email Field -->
+        <UFormGroup
+          label="البريد الإلكتروني"
+          name="email"
+          :error="errors.email"
+          class="text-gray-700 font-medium"
+        >
           <VeeField
             name="email"
             type="email"
@@ -28,12 +26,19 @@
             <UInput
               v-bind="field"
               :error="errorMessage"
-              placeholder="Enter your email"
+              placeholder="Tharad@gmail.com"
+              class="bg-gray-100 text-gray-900 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 w-full"
             />
           </VeeField>
         </UFormGroup>
 
-        <UFormGroup label="Password" name="password" :error="errors.password">
+        <!-- Password Field -->
+        <UFormGroup
+          label="كلمة المرور"
+          name="password"
+          :error="errors.password"
+          class="text-gray-700 font-medium"
+        >
           <VeeField
             name="password"
             type="password"
@@ -45,28 +50,47 @@
               v-bind="field"
               :error="errorMessage"
               type="password"
-              placeholder="Enter your password"
+              placeholder="********"
+              class="bg-gray-100 text-gray-900 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 w-full"
             />
           </VeeField>
         </UFormGroup>
 
+        <!-- Remember Me and Forgot Password -->
         <div class="flex items-center justify-between">
-          <UCheckbox label="Remember me" name="remember" />
+          <UCheckbox label="تذكرني" name="remember" class="text-gray-700" />
           <div class="text-sm">
             <NuxtLink
               to="/auth/forgot-password"
-              class="font-medium text-primary-600 hover:text-primary-500"
+              class="font-medium text-green-600 hover:text-green-500"
             >
-              Forgot your password?
+              هل نسيت كلمة المرور؟
             </NuxtLink>
           </div>
         </div>
 
+        <!-- Submit Button -->
         <div>
-          <UButton type="submit" color="primary" block :loading="loading">
-            Sign in
+          <UButton
+            type="submit"
+            class="bg-gradient-to-r from-[#5CC7A3] text-white to-[#265355] hover:opacity-90 font-bold py-2 px-4 rounded-md"
+            block
+            :loading="loading"
+          >
+            تسجيل الدخول
           </UButton>
         </div>
+
+        <!-- Register Link -->
+        <p class="mt-4 text-center text-sm text-gray-600">
+          ليس لديك حساب؟
+          <NuxtLink
+            to="/auth/register"
+            class="font-medium text-green-600 hover:text-green-500"
+          >
+            إنشاء حساب جديد
+          </NuxtLink>
+        </p>
       </div>
     </VeeForm>
   </NuxtLayout>
