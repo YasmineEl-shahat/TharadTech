@@ -100,6 +100,7 @@
         <!-- Submit Button -->
         <div>
           <UButton
+            size="xl"
             type="submit"
             class="cursor-pointer bg-gradient-to-r from-[#5CC7A3] text-white to-[#265355] hover:opacity-90 font-bold py-2 px-4 rounded-md"
             block
