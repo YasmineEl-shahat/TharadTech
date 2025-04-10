@@ -5,3 +5,9 @@
     </UApp>
   </div>
 </template>
+
+<script setup>
+useHead({
+  title: "TharadTech",
+});
+</script>

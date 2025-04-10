@@ -14,7 +14,7 @@
 
     <!-- Card Content -->
     <div
-      class="relative w-full max-w-md bg-white rounded-lg shadow-lg overflow-hidden"
+      class="relative w-full max-w-xl bg-white rounded-lg shadow-lg overflow-hidden"
     >
       <div class="p-6 sm:p-10">
         <div class="text-center">
