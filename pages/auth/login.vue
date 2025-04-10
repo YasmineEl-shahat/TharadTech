@@ -77,7 +77,8 @@ import { useAuthStore } from "../../stores/auth";
 import { storeToRefs } from "pinia";
 
 const auth = useAuthStore();
-const { loading, loginSchema } = storeToRefs(auth);
+const { loading } = storeToRefs(auth);
+const { loginSchema } = auth; // Access non-reactive property directly
 
 const handleLogin = async (values: any) => {
   try {
