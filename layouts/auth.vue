@@ -16,7 +16,7 @@
     <div
       class="relative w-full max-w-xl bg-white rounded-3xl shadow-lg overflow-hidden"
     >
-      <div class="p-6 sm:p-10 md:p-20">
+      <div class="p-6 sm:p-10 py-15 lg:px-20">
         <div class="text-center">
           <img
             class="mx-auto h-16 w-auto"

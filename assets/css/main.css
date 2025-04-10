@@ -1,2 +1,13 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+input.bg-\(--ui-bg\),
+input.bg-\(--ui-bg\):focus {
+  background-color: #f4f7f6;
+  color: #265355;
+  border: 1px solid #f0e6de !important;
+  --tw-ring-color: var(--ui-border-inverted);
+}
+.text-\(--ui-text\) {
+  color: #0d1d1e;
+}

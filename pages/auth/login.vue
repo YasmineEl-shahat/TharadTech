@@ -11,11 +11,16 @@
       <div class="space-y-6">
         <!-- Email Field -->
         <UFormGroup
-          label="البريد الإلكتروني"
           name="email"
           :error="errors.email"
           class="text-gray-700 font-medium"
         >
+          <label
+            for="email"
+            class="block mb-1 text-sm text-gray-700 font-medium"
+            >البريد الإلكتروني</label
+          >
+
           <VeeField
             name="email"
             type="email"
@@ -24,21 +29,28 @@
             v-slot="{ field, errorMessage }"
           >
             <UInput
+              size="xl"
+              color="neutral"
               v-bind="field"
               :error="errorMessage"
               placeholder="Tharad@gmail.com"
-              class="bg-gray-100 text-gray-900 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 w-full"
+              class="rounded-md w-full mb-4"
             />
           </VeeField>
         </UFormGroup>
 
         <!-- Password Field -->
         <UFormGroup
-          label="كلمة المرور"
           name="password"
           :error="errors.password"
           class="text-gray-700 font-medium"
         >
+          <label
+            for="email"
+            class="block mb-1 text-sm text-gray-700 font-medium"
+            >كلمة المرور</label
+          >
+
           <VeeField
             name="password"
             type="password"
@@ -47,22 +59,38 @@
             v-slot="{ field, errorMessage }"
           >
             <UInput
+              size="xl"
+              color="neutral"
               v-bind="field"
               :error="errorMessage"
-              type="password"
+              :type="showPassword ? 'text' : 'password'"
               placeholder="********"
-              class="bg-gray-100 text-gray-900 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 w-full"
-            />
+              :ui="{ trailing: 'pe-1' }"
+              class="rounded-md w-full"
+            >
+              <template #trailing>
+                <UButton
+                  color="neutral"
+                  variant="link"
+                  size="sm"
+                  :icon="showPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'"
+                  :aria-label="showPassword ? 'Hide password' : 'Show password'"
+                  :aria-pressed="showPassword"
+                  aria-controls="password"
+                  @click="showPassword = !showPassword"
+                />
+              </template>
+            </UInput>
           </VeeField>
         </UFormGroup>
 
         <!-- Remember Me and Forgot Password -->
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between mt-2">
           <UCheckbox label="تذكرني" name="remember" class="text-gray-700" />
           <div class="text-sm">
             <NuxtLink
               to="/auth/forgot-password"
-              class="font-medium text-green-600 hover:text-green-500"
+              class="font-medium text-[#42867B] underline"
             >
               هل نسيت كلمة المرور؟
             </NuxtLink>
@@ -73,7 +101,7 @@
         <div>
           <UButton
             type="submit"
-            class="bg-gradient-to-r from-[#5CC7A3] text-white to-[#265355] hover:opacity-90 font-bold py-2 px-4 rounded-md"
+            class="cursor-pointer bg-gradient-to-r from-[#5CC7A3] text-white to-[#265355] hover:opacity-90 font-bold py-2 px-4 rounded-md"
             block
             :loading="loading"
           >
@@ -103,6 +131,8 @@ import { storeToRefs } from "pinia";
 const auth = useAuthStore();
 const { loading } = storeToRefs(auth);
 const { loginSchema } = auth; // Access non-reactive property directly
+
+const showPassword = ref(false);
 
 const handleLogin = async (values: any) => {
   try {
