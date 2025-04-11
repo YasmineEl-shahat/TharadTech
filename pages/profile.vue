@@ -7,7 +7,7 @@
     <div class="absolute inset-0 bg-[#42867BB2]"></div>
     <h1 class="text-2xl font-bold text-center mb-6 relative">الملف الشخصي</h1>
   </div>
-  <div class="max-w-2xl mx-auto" dir="rtl">
+  <div class="max-w-2xl mx-auto mb-10" dir="rtl">
     <VeeForm @submit="handleUpdateProfile" v-slot="{ errors }">
       <div
         class="bg-white shadow-md rounded-lg p-6 sm:p-10 py-15 lg:px-20 flex flex-col space-y-6"
@@ -97,13 +97,30 @@
           </label>
           <VeeField name="old_password" v-slot="{ field, errorMessage }">
             <UInput
-              id="old_password"
               v-bind="field"
               :error="errorMessage"
+              :type="showOldPassword ? 'text' : 'password'"
               placeholder="********"
-              type="password"
+              size="xl"
+              color="neutral"
+              :ui="{ trailing: 'pe-1' }"
               class="bg-gray-100 text-gray-900 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 w-full"
-            />
+            >
+              <template #trailing>
+                <UButton
+                  color="neutral"
+                  variant="link"
+                  size="sm"
+                  :icon="showOldPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'"
+                  :aria-label="
+                    showOldPassword ? 'Hide password' : 'Show password'
+                  "
+                  :aria-pressed="showOldPassword"
+                  aria-controls="old_password"
+                  @click="showOldPassword = !showOldPassword"
+                />
+              </template>
+            </UInput>
           </VeeField>
         </UFormGroup>
 
@@ -117,13 +134,30 @@
           </label>
           <VeeField name="new_password" v-slot="{ field, errorMessage }">
             <UInput
-              id="new_password"
               v-bind="field"
               :error="errorMessage"
+              :type="showNewPassword ? 'text' : 'password'"
               placeholder="********"
-              type="password"
+              size="xl"
+              color="neutral"
+              :ui="{ trailing: 'pe-1' }"
               class="bg-gray-100 text-gray-900 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 w-full"
-            />
+            >
+              <template #trailing>
+                <UButton
+                  color="neutral"
+                  variant="link"
+                  size="sm"
+                  :icon="showNewPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'"
+                  :aria-label="
+                    showNewPassword ? 'Hide password' : 'Show password'
+                  "
+                  :aria-pressed="showNewPassword"
+                  aria-controls="new_password"
+                  @click="showNewPassword = !showNewPassword"
+                />
+              </template>
+            </UInput>
           </VeeField>
         </UFormGroup>
 
@@ -140,13 +174,32 @@
             v-slot="{ field, errorMessage }"
           >
             <UInput
-              id="confirm_new_password"
               v-bind="field"
               :error="errorMessage"
+              :type="showConfirmNewPassword ? 'text' : 'password'"
               placeholder="********"
-              type="password"
+              size="xl"
+              color="neutral"
+              :ui="{ trailing: 'pe-1' }"
               class="bg-gray-100 text-gray-900 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 w-full"
-            />
+            >
+              <template #trailing>
+                <UButton
+                  color="neutral"
+                  variant="link"
+                  size="sm"
+                  :icon="
+                    showConfirmNewPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'
+                  "
+                  :aria-label="
+                    showConfirmNewPassword ? 'Hide password' : 'Show password'
+                  "
+                  :aria-pressed="showConfirmNewPassword"
+                  aria-controls="confirm_new_password"
+                  @click="showConfirmNewPassword = !showConfirmNewPassword"
+                />
+              </template>
+            </UInput>
           </VeeField>
         </UFormGroup>
 
@@ -154,7 +207,8 @@
         <div class="flex justify-between items-center">
           <UButton
             type="submit"
-            class="bg-gradient-to-r from-[#5CC7A3] to-[#265355] hover:opacity-90 text-white font-bold py-2 px-4 rounded-md w-full"
+            block
+            class="cursor-pointer bg-gradient-to-r from-[#5CC7A3] to-[#265355] hover:opacity-90 text-white font-bold py-2 px-4 rounded-md w-full"
             :loading="loading"
           >
             حفظ التغييرات
@@ -184,6 +238,9 @@ import { ref } from "vue";
 const auth = useAuthStore();
 const { user, loading } = storeToRefs(auth);
 const selectedFile = ref<File | null>(null);
+const showOldPassword = ref(false);
+const showNewPassword = ref(false);
+const showConfirmNewPassword = ref(false);
 
 const handleUpdateProfile = async (values: any) => {
   try {

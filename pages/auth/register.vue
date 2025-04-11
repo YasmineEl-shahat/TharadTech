@@ -99,12 +99,26 @@
             <UInput
               v-bind="field"
               :error="errorMessage"
+              :type="showPassword ? 'text' : 'password'"
               placeholder="********"
-              type="password"
               size="xl"
               color="neutral"
+              :ui="{ trailing: 'pe-1' }"
               class="bg-gray-100 text-gray-900 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 w-full"
-            />
+            >
+              <template #trailing>
+                <UButton
+                  color="neutral"
+                  variant="link"
+                  size="sm"
+                  :icon="showPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'"
+                  :aria-label="showPassword ? 'Hide password' : 'Show password'"
+                  :aria-pressed="showPassword"
+                  aria-controls="password"
+                  @click="showPassword = !showPassword"
+                />
+              </template>
+            </UInput>
           </VeeField>
         </UFormGroup>
 
@@ -127,12 +141,30 @@
             <UInput
               v-bind="field"
               :error="errorMessage"
+              :type="showConfirmPassword ? 'text' : 'password'"
               placeholder="********"
-              type="password"
               size="xl"
               color="neutral"
+              :ui="{ trailing: 'pe-1' }"
               class="bg-gray-100 text-gray-900 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 w-full"
-            />
+            >
+              <template #trailing>
+                <UButton
+                  color="neutral"
+                  variant="link"
+                  size="sm"
+                  :icon="
+                    showConfirmPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'
+                  "
+                  :aria-label="
+                    showConfirmPassword ? 'Hide password' : 'Show password'
+                  "
+                  :aria-pressed="showConfirmPassword"
+                  aria-controls="password_confirmation"
+                  @click="showConfirmPassword = !showConfirmPassword"
+                />
+              </template>
+            </UInput>
           </VeeField>
         </UFormGroup>
 
@@ -173,6 +205,8 @@ const auth = useAuthStore();
 const { loading, registerSchema } = storeToRefs(auth);
 
 const selectedFile = ref<File | null>(null);
+const showPassword = ref(false);
+const showConfirmPassword = ref(false);
 
 const handleRegister = async (values: any) => {
   try {
