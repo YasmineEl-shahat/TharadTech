@@ -90,7 +90,7 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
-  const updateProfile = async (profileData: Partial<User>) => {
+  const updateProfile = async (profileData: FormData) => {
     state.loading = true;
     try {
       const { data } = await apiFetch<{ user: User }>("/auth/profile", {
