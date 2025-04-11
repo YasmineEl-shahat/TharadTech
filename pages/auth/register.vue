@@ -167,13 +167,25 @@
 <script setup lang="ts">
 import { useAuthStore } from "../../stores/auth";
 import { storeToRefs } from "pinia";
+import { ref } from "vue";
 
 const auth = useAuthStore();
 const { loading, registerSchema } = storeToRefs(auth);
 
+const selectedFile = ref<File | null>(null);
+
 const handleRegister = async (values: any) => {
   try {
-    await auth.register(values);
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("email", values.email);
+    formData.append("password", values.password);
+    formData.append("password_confirmation", values.password_confirmation);
+    if (selectedFile.value) {
+      formData.append("image", selectedFile.value);
+    }
+
+    await auth.register(formData);
     navigateTo("/auth/verify-otp");
   } catch (error) {
     console.error("Registration failed:", error);
@@ -181,7 +193,9 @@ const handleRegister = async (values: any) => {
 };
 
 const triggerFileInput = () => {
-  const fileInput = document.getElementById("profile_picture");
+  const fileInput = document.getElementById(
+    "profile_picture"
+  ) as HTMLInputElement;
   if (fileInput) {
     fileInput.click();
   }
@@ -191,6 +205,7 @@ const handleFileUpload = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const file = target.files ? target.files[0] : null;
   if (file) {
+    selectedFile.value = file;
     console.log("File selected:", file);
   }
 };

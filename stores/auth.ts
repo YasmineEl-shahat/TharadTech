@@ -44,12 +44,15 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
-  const register = async (userData: z.infer<typeof registerSchema>) => {
+  const register = async (userData: FormData) => {
     state.loading = true;
     try {
       await apiFetch("/auth/register", {
         method: "POST",
-        body: userData,
+        body: userData, // FormData is directly passed here
+        headers: {
+          // Do not set Content-Type; the browser will set it automatically for FormData
+        },
       });
     } finally {
       state.loading = false;
