@@ -33,5 +33,5 @@ export const registerSchema = z
   });
 
 export const otpSchema = z.object({
-  otp: z.string().length(6, "OTP must be 6 digits"),
+  otp: z.string().length(5, "OTP must be 5 digits"),
 });

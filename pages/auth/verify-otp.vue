@@ -1,8 +1,8 @@
 <template>
   <NuxtLayout name="auth">
-    <template #title>Verify your account</template>
+    <template #title>رمز التحقق</template>
     <template #subtitle>
-      Please enter the 6-digit code sent to your email
+      لاستكمال فتح حسابك ادخل رمز التحقق المرسل عبر البريد الإلكتروني
     </template>
 
     <VeeForm
@@ -11,39 +11,50 @@
       v-slot="{ errors }"
     >
       <div class="space-y-6">
+        <!-- OTP Input Field -->
         <div>
-          <UFormGroup label="OTP Code" name="otp">
-            <VeeField name="otp" v-slot="{ field, errors }">
-              <UInput
+          <UFormGroup name="otp">
+            <VeeField name="otp" v-slot="{ field, errorMessage }">
+              <UPinInput
                 v-bind="field"
-                :error="errors[0]"
-                placeholder="Enter 6-digit code"
-                type="text"
-                maxlength="6"
-                class="text-center tracking-widest text-lg"
+                :error="errorMessage"
+                otp
+                length="6"
+                placeholder="•"
+                size="xl"
+                class="text-center tracking-widest text-lg w-full"
               />
             </VeeField>
           </UFormGroup>
         </div>
 
-        <div>
-          <UButton type="submit" color="primary" block :loading="loading">
-            Verify Account
-          </UButton>
-        </div>
+        <!-- Resend OTP and Timer -->
+        <div class="flex justify-between items-center text-sm text-gray-600">
+          <p>{{ timer }} Sec</p>
 
-        <div class="text-center">
-          <p class="text-sm text-gray-600">
-            Didn't receive the code?
+          <div class="flex items-center">
+            <p>لم يصلك رمز؟</p>
             <UButton
               variant="link"
-              color="primary"
               :loading="resendLoading"
               @click="handleResendOtp"
+              class="text-[#265355] hover:text-[#265355] p-0 underline cursor-pointer"
             >
-              Resend OTP
+              إعادة إرسال
             </UButton>
-          </p>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+          <UButton
+            type="submit"
+            block
+            class="cursor-pointer bg-gradient-to-r from-[#5CC7A3] to-[#265355] hover:opacity-90 text-white font-bold py-2 px-4 rounded-md w-full"
+            :loading="loading"
+          >
+            المتابعة
+          </UButton>
         </div>
       </div>
     </VeeForm>
@@ -53,11 +64,13 @@
 <script setup lang="ts">
 import { useAuthStore } from "../../stores/auth";
 import { storeToRefs } from "pinia";
+import { ref, onMounted } from "vue";
 import { useApi } from "../../composables/useApi";
 
 const auth = useAuthStore();
 const { loading, otpSchema } = storeToRefs(auth);
 const resendLoading = ref(false);
+const timer = ref(59);
 
 const handleVerifyOtp = async (values: any) => {
   try {
@@ -75,12 +88,28 @@ const handleResendOtp = async () => {
     await apiFetch("/auth/resend-otp", {
       method: "POST",
     });
+    timer.value = 59; // Reset timer after resending OTP
   } catch (error) {
     console.error("Resend OTP failed:", error);
   } finally {
     resendLoading.value = false;
   }
 };
+
+// Countdown Timer
+const startTimer = () => {
+  const interval = setInterval(() => {
+    if (timer.value > 0) {
+      timer.value -= 1;
+    } else {
+      clearInterval(interval);
+    }
+  }, 1000);
+};
+
+onMounted(() => {
+  startTimer();
+});
 
 definePageMeta({
   layout: false,

@@ -11,3 +11,6 @@ input.bg-\(--ui-bg\):focus {
 .text-\(--ui-text\) {
   color: #0d1d1e;
 }
+.tracking-widest input {
+  width: 20%;
+}
