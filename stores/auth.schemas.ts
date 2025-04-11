@@ -11,6 +11,21 @@ export const registerSchema = z
     email: z.string().email("Invalid email format"),
     password: z.string().min(8, "Password must be at least 8 characters"),
     password_confirmation: z.string(),
+    image: z
+      .any()
+      .refine(
+        (file) =>
+          file instanceof File &&
+          ["image/jpeg", "image/jpg", "image/png"].includes(file.type),
+        {
+          message: "Only JPEG, JPG and PNG files are allowed",
+          path: ["image"],
+        }
+      )
+      .refine((file) => file instanceof File && file.size <= 5 * 1024 * 1024, {
+        message: "File size must not exceed 5MB",
+        path: ["image"],
+      }),
   })
   .refine((data) => data.password === data.password_confirmation, {
     message: "Passwords don't match",
