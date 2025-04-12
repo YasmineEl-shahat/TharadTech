@@ -5,6 +5,7 @@
 
     <VeeForm
       :validation-schema="registerSchema"
+      :initial-values="registerFormValues"
       @submit="handleRegister"
       v-slot="{ errors }"
     >
@@ -207,6 +208,15 @@ const { loading, registerSchema } = storeToRefs(auth);
 const selectedFile = ref<File | null>(null);
 const showPassword = ref(false);
 const showConfirmPassword = ref(false);
+
+// Initialize default values for the form
+const registerFormValues = ref({
+  name: "",
+  email: "",
+  password: "",
+  password_confirmation: "",
+  image: null,
+});
 
 const handleRegister = async (values: any) => {
   try {

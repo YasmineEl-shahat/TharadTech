@@ -7,6 +7,7 @@
 
     <VeeForm
       :validation-schema="otpSchema"
+      :initial-values="otpFormValues"
       @submit="handleVerifyOtp"
       v-slot="{ errors }"
     >
@@ -71,6 +72,11 @@ const auth = useAuthStore();
 const { loading, otpSchema } = storeToRefs(auth);
 const resendLoading = ref(false);
 const timer = ref(59);
+
+// Initialize default values for the form
+const otpFormValues = ref({
+  otp: "",
+});
 
 const handleVerifyOtp = async (values: any) => {
   try {

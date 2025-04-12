@@ -8,7 +8,11 @@
     <h1 class="text-2xl font-bold text-center mb-6 relative">الملف الشخصي</h1>
   </div>
   <div class="max-w-2xl mx-auto mb-10" dir="rtl">
-    <VeeForm @submit="handleUpdateProfile" v-slot="{ errors }">
+    <VeeForm
+      :initial-values="profileFormValues"
+      v-slot="{ errors }"
+      @submit="handleUpdateProfile"
+    >
       <div
         class="bg-white shadow-md rounded-lg p-6 sm:p-10 py-15 lg:px-20 flex flex-col space-y-6"
       >
@@ -63,7 +67,7 @@
         <!-- Profile Picture Upload -->
         <div>
           <label
-            for="profile_picture"
+            for="image"
             class="block mb-1 text-sm text-gray-700 font-medium"
           >
             الصورة الشخصية
@@ -79,7 +83,7 @@
             </div>
           </div>
           <input
-            id="profile_picture"
+            id="image"
             type="file"
             accept="image/jpeg, image/png"
             class="hidden"
@@ -237,10 +241,21 @@ import { ref } from "vue";
 
 const auth = useAuthStore();
 const { user, loading } = storeToRefs(auth);
+
 const selectedFile = ref<File | null>(null);
 const showOldPassword = ref(false);
 const showNewPassword = ref(false);
 const showConfirmNewPassword = ref(false);
+
+// Initialize default values for the form
+const profileFormValues = ref({
+  name: user.value?.name || "",
+  email: user.value?.email || "",
+  old_password: "",
+  new_password: "",
+  confirm_new_password: "",
+  image: null,
+});
 
 const handleUpdateProfile = async (values: any) => {
   try {
@@ -251,7 +266,7 @@ const handleUpdateProfile = async (values: any) => {
     formData.append("new_password", values.new_password || "");
     formData.append("confirm_new_password", values.confirm_new_password || "");
     if (selectedFile.value) {
-      formData.append("profile_picture", selectedFile.value);
+      formData.append("image", selectedFile.value);
     }
 
     await auth.updateProfile(formData);

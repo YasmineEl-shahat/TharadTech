@@ -5,6 +5,7 @@
 
     <VeeForm
       :validation-schema="loginSchema"
+      :initial-values="loginFormValues"
       v-slot="{ errors }"
       @submit="handleLogin"
     >
@@ -128,12 +129,19 @@
 <script setup lang="ts">
 import { useAuthStore } from "../../stores/auth";
 import { storeToRefs } from "pinia";
+import { ref } from "vue";
 
 const auth = useAuthStore();
 const { loading } = storeToRefs(auth);
 const { loginSchema } = auth; // Access non-reactive property directly
 
 const showPassword = ref(false);
+
+// Initialize default values for the form
+const loginFormValues = ref({
+  email: "",
+  password: "",
+});
 
 const handleLogin = async (values: any) => {
   try {
