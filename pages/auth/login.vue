@@ -7,7 +7,7 @@
       :validation-schema="loginSchema"
       :initial-values="loginFormValues"
       :validate-on-mount="false"
-      v-slot="{ errors, validate, isSubmitting }"
+      v-slot="{ errors, isSubmitting }"
       @submit="handleLogin"
     >
       <!-- Debug the form values -->
@@ -134,12 +134,10 @@ import { storeToRefs } from "pinia";
 import { ref } from "vue";
 
 const auth = useAuthStore();
-const loginSchema = auth.loginSchema;
-const { loading } = storeToRefs(auth);
+const { loading, loginSchema } = storeToRefs(auth);
 
 const showPassword = ref(false);
 
-// Initialize default values for the form
 const loginFormValues = ref({
   email: "",
   password: "",

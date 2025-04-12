@@ -13,9 +13,9 @@ export const loginSchema = z.object({
 
 export const registerSchema = z
   .object({
-    name: z.string().min(2, "Name must be at least 2 characters"),
-    email: z.string().email("Invalid email format"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
+    name: z.string().min(2, "الاسم يجب أن يكون حرفين على الأقل"),
+    email: z.string().email("صيغة البريد الإلكتروني غير صحيحة"),
+    password: z.string().min(8, "يجب أن تكون كلمة المرور 8 أحرف على الأقل"),
     password_confirmation: z.string(),
     image: z
       .any()
@@ -34,10 +34,22 @@ export const registerSchema = z
       }),
   })
   .refine((data) => data.password === data.password_confirmation, {
-    message: "Passwords don't match",
+    message: "كلمة المرور غير متطابقة",
     path: ["password_confirmation"],
   });
 
 export const otpSchema = z.object({
-  otp: z.string().length(5, "OTP must be 5 digits"),
+  otp: z.string().length(5, "رمز التحقق يجب أن يكون 5 أرقام"),
+});
+
+export const profileSchema = z.object({
+  name: z.string().min(2, "الاسم يجب أن يكون حرفين على الأقل"),
+  email: z.string().email("صيغة البريد الإلكتروني غير صحيحة"),
+  old_password: z.string().optional(),
+  new_password: z
+    .string()
+    .min(8, "يجب أن تكون كلمة المرور 8 أحرف على الأقل")
+    .optional(),
+  confirm_new_password: z.string().optional(),
+  image: z.any().optional(),
 });
