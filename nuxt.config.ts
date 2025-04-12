@@ -50,7 +50,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: "https://api.tharadtech.com/api",
+      apiBase: "https://flutter.tharadtech.com/api",
     },
   },
   imports: {

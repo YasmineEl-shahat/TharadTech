@@ -134,7 +134,8 @@ import { storeToRefs } from "pinia";
 import { ref } from "vue";
 
 const auth = useAuthStore();
-const { loading, loginSchema } = storeToRefs(auth);
+const { loading } = storeToRefs(auth);
+const { loginSchema } = auth;
 
 const showPassword = ref(false);
 
@@ -145,8 +146,12 @@ const loginFormValues = ref({
 
 const handleLogin = async (values: any) => {
   try {
-    await auth.login(values);
-    navigateTo("/dashboard");
+    // Validate the form values against the schema
+    const validatedData = loginSchema.parse(values);
+
+    // Only proceed if validation passes
+    await auth.login(validatedData);
+    navigateTo("/profile");
   } catch (error) {
     console.error("Login failed:", error);
   }
