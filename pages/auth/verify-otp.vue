@@ -20,12 +20,13 @@
                 v-bind="field"
                 :error="errorMessage"
                 otp
-                length="4"
+                length="5"
                 placeholder="•"
                 size="xl"
                 class="text-center tracking-widest text-lg w-full"
               />
             </VeeField>
+            <VeeErrorMessage name="otp" class="text-red-500 text-sm mt-1" />
           </UFormGroup>
         </div>
 

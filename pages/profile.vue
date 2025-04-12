@@ -18,7 +18,7 @@
         class="bg-white shadow-md rounded-lg p-6 sm:p-10 py-15 lg:px-20 flex flex-col space-y-6"
       >
         <!-- Full Name Field -->
-        <UFormGroup name="name">
+        <UFormGroup name="name" :error="errors.name">
           <label
             for="name"
             class="block mb-1 text-sm text-gray-700 font-medium"
@@ -38,10 +38,11 @@
               class="bg-gray-100 text-gray-900 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 w-full"
             />
           </VeeField>
+          <VeeErrorMessage name="name" class="text-red-500 text-sm mt-1" />
         </UFormGroup>
 
         <!-- Email Field -->
-        <UFormGroup name="email">
+        <UFormGroup name="email" :error="errors.email">
           <label
             for="email"
             class="block mb-1 text-sm text-gray-700 font-medium"
@@ -63,10 +64,11 @@
               class="bg-gray-100 text-gray-900 border border-gray-300 rounded-md w-full"
             />
           </VeeField>
+          <VeeErrorMessage name="email" class="text-red-500 text-sm mt-1" />
         </UFormGroup>
 
         <!-- Profile Picture Upload -->
-        <div>
+        <UFormGroup name="image" :error="errors.image">
           <label
             for="image"
             class="block mb-1 text-sm text-gray-700 font-medium"
@@ -105,10 +107,11 @@
               ×
             </button>
           </div>
-        </div>
+          <VeeErrorMessage name="image" class="text-red-500 text-sm mt-1" />
+        </UFormGroup>
 
         <!-- Old Password Field -->
-        <UFormGroup name="old_password">
+        <UFormGroup name="old_password" :error="errors.old_password">
           <label
             for="old_password"
             class="block mb-1 text-sm text-gray-700 font-medium"
@@ -142,10 +145,14 @@
               </template>
             </UInput>
           </VeeField>
+          <VeeErrorMessage
+            name="old_password"
+            class="text-red-500 text-sm mt-1"
+          />
         </UFormGroup>
 
         <!-- New Password Field -->
-        <UFormGroup name="new_password">
+        <UFormGroup name="new_password" :error="errors.new_password">
           <label
             for="new_password"
             class="block mb-1 text-sm text-gray-700 font-medium"
@@ -179,10 +186,17 @@
               </template>
             </UInput>
           </VeeField>
+          <VeeErrorMessage
+            name="new_password"
+            class="text-red-500 text-sm mt-1"
+          />
         </UFormGroup>
 
         <!-- Confirm New Password Field -->
-        <UFormGroup name="confirm_new_password">
+        <UFormGroup
+          name="confirm_new_password"
+          :error="errors.confirm_new_password"
+        >
           <label
             for="confirm_new_password"
             class="block mb-1 text-sm text-gray-700 font-medium"
@@ -221,6 +235,10 @@
               </template>
             </UInput>
           </VeeField>
+          <VeeErrorMessage
+            name="confirm_new_password"
+            class="text-red-500 text-sm mt-1"
+          />
         </UFormGroup>
 
         <!-- Save Changes Button -->
