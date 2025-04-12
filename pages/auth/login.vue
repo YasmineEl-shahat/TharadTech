@@ -7,7 +7,7 @@
       :validation-schema="loginSchema"
       :initial-values="loginFormValues"
       :validate-on-mount="false"
-      v-slot="{ errors }"
+      v-slot="{ errors, validate, isSubmitting }"
       @submit="handleLogin"
     >
       <!-- Debug the form values -->
@@ -107,7 +107,7 @@
             type="submit"
             class="cursor-pointer bg-gradient-to-r from-[#5CC7A3] text-white to-[#265355] hover:opacity-90 font-bold py-2 px-4 rounded-md"
             block
-            :loading="loading"
+            :loading="loading || isSubmitting"
           >
             تسجيل الدخول
           </UButton>
