@@ -1,11 +1,14 @@
 import { z } from "zod";
 
 export const loginSchema = z.object({
-  email: z.string().nonempty("Email is required").email("Invalid email format"),
+  email: z
+    .string()
+    .nonempty("البريد الإلكتروني مطلوب")
+    .email("صيغة البريد الإلكتروني غير صحيحة"),
   password: z
     .string()
-    .nonempty("Password is required")
-    .min(8, "Password must be at least 8 characters"),
+    .nonempty("كلمة المرور مطلوبة")
+    .min(8, "يجب أن تكون كلمة المرور 8 أحرف على الأقل"),
 });
 
 export const registerSchema = z

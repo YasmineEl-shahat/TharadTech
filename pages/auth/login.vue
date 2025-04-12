@@ -6,9 +6,11 @@
     <VeeForm
       :validation-schema="loginSchema"
       :initial-values="loginFormValues"
+      :validate-on-mount="false"
       v-slot="{ errors }"
       @submit="handleLogin"
     >
+      <!-- Debug the form values -->
       <div class="space-y-6">
         <!-- Email Field -->
         <UFormGroup
@@ -132,8 +134,8 @@ import { storeToRefs } from "pinia";
 import { ref } from "vue";
 
 const auth = useAuthStore();
+const loginSchema = auth.loginSchema;
 const { loading } = storeToRefs(auth);
-const { loginSchema } = auth; // Access non-reactive property directly
 
 const showPassword = ref(false);
 
