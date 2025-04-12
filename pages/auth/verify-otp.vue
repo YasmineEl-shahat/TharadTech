@@ -20,7 +20,7 @@
                 v-bind="field"
                 :error="errorMessage"
                 otp
-                length="6"
+                length="4"
                 placeholder="•"
                 size="xl"
                 class="text-center tracking-widest text-lg w-full"
@@ -67,15 +67,20 @@ import { useAuthStore } from "../../stores/auth";
 import { storeToRefs } from "pinia";
 import { ref, onMounted } from "vue";
 import { useApi } from "../../composables/useApi";
+import { useRoute } from "vue-router";
 
+const route = useRoute();
 const auth = useAuthStore();
 const { loading, otpSchema } = storeToRefs(auth);
 const resendLoading = ref(false);
 const timer = ref(59);
 
-// Initialize default values for the form
+const email = route.query.email as string;
+
+// Initial form values with email
 const otpFormValues = ref({
   otp: "",
+  email: email || "",
 });
 
 const handleVerifyOtp = async (values: any) => {
@@ -91,10 +96,10 @@ const handleResendOtp = async () => {
   resendLoading.value = true;
   const { apiFetch } = useApi();
   try {
-    await apiFetch("/auth/resend-otp", {
+    await apiFetch(`/auth/resend-otp?email=${email}`, {
       method: "POST",
     });
-    timer.value = 59; // Reset timer after resending OTP
+    timer.value = 59;
   } catch (error) {
     console.error("Resend OTP failed:", error);
   } finally {
@@ -102,7 +107,7 @@ const handleResendOtp = async () => {
   }
 };
 
-// Countdown Timer
+// Timer logic
 const startTimer = () => {
   const interval = setInterval(() => {
     if (timer.value > 0) {

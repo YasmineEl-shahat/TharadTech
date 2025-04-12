@@ -230,7 +230,7 @@ const handleRegister = async (values: any) => {
     }
 
     await auth.register(formData);
-    navigateTo("/auth/verify-otp");
+    navigateTo(`/auth/verify-otp?email=${values.email}`);
   } catch (error) {
     console.error("Registration failed:", error);
   }

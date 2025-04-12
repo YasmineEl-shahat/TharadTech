@@ -58,14 +58,20 @@ export const useAuthStore = defineStore("auth", () => {
       state.loading = false;
     }
   };
-
-  const verifyOtp = async (otpData: z.infer<typeof otpSchema>) => {
+  const verifyOtp = async (
+    otpData: z.infer<typeof otpSchema> & { email: string }
+  ) => {
     state.loading = true;
     try {
-      const { data } = await apiFetch<{ token: string }>("/auth/verify-otp", {
-        method: "POST",
-        body: otpData,
+      const query = new URLSearchParams({
+        email: otpData.email,
+        otp: otpData.otp,
+      }).toString();
+
+      const { data } = await apiFetch<{ token: string }>(`/otp?${query}`, {
+        method: "GET",
       });
+
       if (data.value?.token) {
         token.value = data.value.token;
         state.isAuthenticated = true;

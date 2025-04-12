@@ -4,7 +4,7 @@
     <template #subtitle>قم بإدخال بياناتك حتى تستطيع تسجيل الدخول</template>
 
     <VeeForm
-      :validation-schema="loginSchema"
+      :validation-schema="validationSchema"
       :initial-values="loginFormValues"
       :validate-on-mount="false"
       v-slot="{ errors, isSubmitting }"
@@ -132,12 +132,15 @@
 import { useAuthStore } from "../../stores/auth";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
+import { toTypedSchema } from "@vee-validate/zod";
+import { loginSchema } from "../../stores/auth.schemas";
 
 const auth = useAuthStore();
 const { loading } = storeToRefs(auth);
-const { loginSchema } = auth;
-
 const showPassword = ref(false);
+
+// Convert Zod schema to VeeValidate compatible schema
+const validationSchema = toTypedSchema(loginSchema);
 
 const loginFormValues = ref({
   email: "",
@@ -146,11 +149,7 @@ const loginFormValues = ref({
 
 const handleLogin = async (values: any) => {
   try {
-    // Validate the form values against the schema
-    const validatedData = loginSchema.parse(values);
-
-    // Only proceed if validation passes
-    await auth.login(validatedData);
+    await auth.login(values);
     navigateTo("/profile");
   } catch (error) {
     console.error("Login failed:", error);
