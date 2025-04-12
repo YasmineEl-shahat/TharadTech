@@ -35,6 +35,22 @@
           @change="handleFileUpload"
         />
 
+        <!-- Image Preview -->
+        <div v-if="selectedFile" class="mt-4 relative w-fit mx-auto">
+          <img
+            :src="imagePreviewUrl"
+            alt="Preview"
+            class="w-24 h-24 object-cover rounded-full border border-gray-300"
+          />
+          <button
+            type="button"
+            class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs"
+            @click="removeImage"
+          >
+            ×
+          </button>
+        </div>
+
         <!-- Full Name Field -->
         <UFormGroup
           name="name"
@@ -57,6 +73,7 @@
               class="bg-gray-100 text-gray-900 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 w-full"
             />
           </VeeField>
+          <VeeErrorMessage name="name" class="text-red-500 text-sm mt-1" />
         </UFormGroup>
 
         <!-- Email Field -->
@@ -82,6 +99,7 @@
               class="bg-gray-100 text-gray-900 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 w-full"
             />
           </VeeField>
+          <VeeErrorMessage name="email" class="text-red-500 text-sm mt-1" />
         </UFormGroup>
 
         <!-- Password Field -->
@@ -121,6 +139,7 @@
               </template>
             </UInput>
           </VeeField>
+          <VeeErrorMessage name="password" class="text-red-500 text-sm mt-1" />
         </UFormGroup>
 
         <!-- Confirm Password Field -->
@@ -167,6 +186,10 @@
               </template>
             </UInput>
           </VeeField>
+          <VeeErrorMessage
+            name="password_confirmation"
+            class="text-red-500 text-sm mt-1"
+          />
         </UFormGroup>
 
         <!-- Submit Button -->
@@ -210,6 +233,8 @@ const { loading } = storeToRefs(auth);
 const validationSchema = toTypedSchema(registerSchema);
 
 const selectedFile = ref<File | null>(null);
+const imagePreviewUrl = ref<string | undefined>(undefined);
+
 const showPassword = ref(false);
 const showConfirmPassword = ref(false);
 
@@ -254,8 +279,12 @@ const handleFileUpload = (event: Event) => {
   const file = target.files ? target.files[0] : null;
   if (file) {
     selectedFile.value = file;
-    console.log("File selected:", file);
+    imagePreviewUrl.value = URL.createObjectURL(file); // <-- preview
   }
+};
+const removeImage = () => {
+  selectedFile.value = null;
+  imagePreviewUrl.value = undefined;
 };
 
 definePageMeta({

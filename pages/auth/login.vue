@@ -40,6 +40,7 @@
               class="rounded-md w-full mb-4"
             />
           </VeeField>
+          <VeeErrorMessage name="email" class="text-red-500 text-sm mt-1" />
         </UFormGroup>
 
         <!-- Password Field -->
@@ -85,6 +86,7 @@
               </template>
             </UInput>
           </VeeField>
+          <VeeErrorMessage name="password" class="text-red-500 text-sm mt-1" />
         </UFormGroup>
 
         <!-- Remember Me and Forgot Password -->

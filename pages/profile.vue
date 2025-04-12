@@ -90,6 +90,21 @@
             class="hidden"
             @change="handleFileUpload"
           />
+          <!-- Image Preview -->
+          <div v-if="selectedFile" class="mt-4 relative w-fit mx-auto">
+            <img
+              :src="imagePreviewUrl"
+              alt="Preview"
+              class="w-24 h-24 object-cover rounded-full border border-gray-300"
+            />
+            <button
+              type="button"
+              class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs"
+              @click="removeImage"
+            >
+              ×
+            </button>
+          </div>
         </div>
 
         <!-- Old Password Field -->
@@ -248,6 +263,8 @@ const { user, loading } = storeToRefs(auth);
 const validationSchema = toTypedSchema(profileSchema);
 
 const selectedFile = ref<File | null>(null);
+const imagePreviewUrl = ref<string | undefined>(undefined);
+
 const showOldPassword = ref(false);
 const showNewPassword = ref(false);
 const showConfirmNewPassword = ref(false);
@@ -304,8 +321,12 @@ const handleFileUpload = (event: Event) => {
   const file = target.files ? target.files[0] : null;
   if (file) {
     selectedFile.value = file;
-    console.log("File selected:", file);
+    imagePreviewUrl.value = URL.createObjectURL(file); // <-- preview
   }
+};
+const removeImage = () => {
+  selectedFile.value = null;
+  imagePreviewUrl.value = undefined;
 };
 
 const handleLogout = () => {
