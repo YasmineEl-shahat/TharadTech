@@ -6,7 +6,7 @@
     </template>
 
     <VeeForm
-      :validation-schema="otpSchema"
+      :validation-schema="validationSchema"
       :initial-values="otpFormValues"
       @submit="handleVerifyOtp"
       v-slot="{ errors }"
@@ -68,12 +68,15 @@ import { storeToRefs } from "pinia";
 import { ref, onMounted } from "vue";
 import { useApi } from "../../composables/useApi";
 import { useRoute } from "vue-router";
+import { toTypedSchema } from "@vee-validate/zod";
+import { otpSchema } from "../../stores/auth.schemas";
 
 const route = useRoute();
 const auth = useAuthStore();
-const { loading, otpSchema } = storeToRefs(auth);
+const { loading } = storeToRefs(auth);
 const resendLoading = ref(false);
 const timer = ref(59);
+const validationSchema = toTypedSchema(otpSchema);
 
 const email = route.query.email as string;
 

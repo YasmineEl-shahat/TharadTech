@@ -9,6 +9,7 @@
   </div>
   <div class="max-w-2xl mx-auto mb-10" dir="rtl">
     <VeeForm
+      :validation-schema="validationSchema"
       :initial-values="profileFormValues"
       v-slot="{ errors }"
       @submit="handleUpdateProfile"
@@ -238,9 +239,13 @@
 import { useAuthStore } from "../stores/auth";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
+import { toTypedSchema } from "@vee-validate/zod";
+import { profileSchema } from "../stores/auth.schemas";
 
 const auth = useAuthStore();
 const { user, loading } = storeToRefs(auth);
+
+const validationSchema = toTypedSchema(profileSchema);
 
 const selectedFile = ref<File | null>(null);
 const showOldPassword = ref(false);

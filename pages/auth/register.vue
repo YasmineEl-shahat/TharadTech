@@ -4,7 +4,7 @@
     <template #subtitle>قم بإدخال بياناتك حتى تستطيع إنشاء حساب جديد</template>
 
     <VeeForm
-      :validation-schema="registerSchema"
+      :validation-schema="validationSchema"
       :initial-values="registerFormValues"
       @submit="handleRegister"
       v-slot="{ errors }"
@@ -201,9 +201,13 @@
 import { useAuthStore } from "../../stores/auth";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
+import { toTypedSchema } from "@vee-validate/zod";
+import { registerSchema } from "../../stores/auth.schemas";
 
 const auth = useAuthStore();
-const { loading, registerSchema } = storeToRefs(auth);
+const { loading } = storeToRefs(auth);
+
+const validationSchema = toTypedSchema(registerSchema);
 
 const selectedFile = ref<File | null>(null);
 const showPassword = ref(false);
