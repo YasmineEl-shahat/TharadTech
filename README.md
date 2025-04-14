@@ -22,8 +22,8 @@ This is a Nuxt 3 project that includes authentication, profile management, and p
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YasmineEl-shahat/tharadtech.git
-   cd tharadtech
+   git clone https://github.com/YasmineEl-shahat/TharadTech.git
+   cd TharadTech
 
 ## Setup
 
@@ -94,5 +94,9 @@ yarn preview
 # bun
 bun run preview
 ```
+Then open your browser and go to:
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+http://localhost:3000
+
+
+
