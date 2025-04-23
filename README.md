@@ -1,6 +1,29 @@
-# Nuxt 3 Minimal Starter
+# Nuxt 3 Auth Project
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This is a Nuxt 3 project that includes authentication, profile management, and protected routes using middleware.
+
+## Features
+
+- User registration and login
+- OTP verification
+- Profile update (including password and profile picture)
+- Route protection via middleware
+- TailwindCSS for styling
+
+## Project Structure
+
+- `pages/`: Contains all page components (e.g., `auth/login.vue`, `profile.vue`, `index.vue`)
+- `stores/`: Contains Pinia stores, including `auth.ts`
+- `middleware/`: Contains route guards like `auth.ts` and `guest.ts`
+- `components/`: Contains reusable UI components
+- `public/images/`: Contains static images used across the app
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/YasmineEl-shahat/TharadTech.git
+   cd TharadTech
 
 ## Setup
 
@@ -71,5 +94,9 @@ yarn preview
 # bun
 bun run preview
 ```
+Then open your browser and go to:
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+http://localhost:3000
+
+
+
